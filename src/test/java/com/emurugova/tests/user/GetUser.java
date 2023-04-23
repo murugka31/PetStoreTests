@@ -5,6 +5,7 @@ import com.emurugova.allure.Microservice;
 import com.emurugova.models.User;
 import com.emurugova.tests.TestBase;
 import com.emurugova.tests.TestData;
+import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
@@ -21,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Microservice("Swagger Petstore")
 @Layer("API")
 @Owner("Murugova Elena")
+@Feature("GET")
 public class GetUser extends TestBase {
 
     @Test
