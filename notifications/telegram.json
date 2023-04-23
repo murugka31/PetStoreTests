@@ -1,0 +1,17 @@
+{
+  "base": {
+    "project": "PetStoreTests",
+    "environment": "test environment",
+    "comment": "telegram message check",
+    "reportLink": "",
+    "language": "en",
+    "messanger": "telegram",
+    "allureFolder": "build/reports/allure-report/",
+    "enableChart": true
+  },
+  "telegram": {
+    "token": "5940466927:AAHba05-zML2nvVL3xdcCdeA146XfdSMf5E",
+    "chat": "-1001804151444",
+    "replyTo": ""
+  }
+}
