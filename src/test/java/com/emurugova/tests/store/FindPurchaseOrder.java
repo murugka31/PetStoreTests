@@ -1,8 +1,12 @@
 package com.emurugova.tests.store;
 
+import com.emurugova.allure.Layer;
+import com.emurugova.allure.Microservice;
 import com.emurugova.tests.TestBase;
 import com.emurugova.tests.TestData;
+import io.qameta.allure.Owner;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 import static com.emurugova.filters.CustomLogFilter.customLogFilter;
@@ -12,10 +16,13 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.is;
 
+@Microservice("Swagger Petstore")
+@Layer("API")
+@Owner("Murugova Elena")
 public class FindPurchaseOrder extends TestBase {
 
-    @Tag("storeTest")
     @Test
+    @Tags({@Tag("api"), @Tag("critical"), @Tag("storeTest")})
     void findPurchaseOrderById () {
         int purchaseOrder = TestData.purchaseOrder;
         String newPurchaseOrderData = TestData.newPurchaseOrderData;
@@ -38,8 +45,8 @@ public class FindPurchaseOrder extends TestBase {
         });
     }
 
-    @Tag("storeTest")
     @Test
+    @Tags({@Tag("api"), @Tag("normal"), @Tag("storeTest")})
     void findNoPurchaseOrderById () {
         int noPurchaseOrder = TestData.noPurchaseOrder;
         given().filter(customLogFilter().withCustomTemplates())

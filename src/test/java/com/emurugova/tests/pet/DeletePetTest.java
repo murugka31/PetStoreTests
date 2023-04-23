@@ -1,8 +1,12 @@
 package com.emurugova.tests.pet;
 
+import com.emurugova.allure.Layer;
+import com.emurugova.allure.Microservice;
 import com.emurugova.tests.TestBase;
 import com.emurugova.tests.TestData;
+import io.qameta.allure.Owner;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 import static com.emurugova.filters.CustomLogFilter.customLogFilter;
@@ -11,10 +15,13 @@ import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.*;
 import static io.restassured.http.ContentType.JSON;
 
+@Microservice("Swagger Petstore")
+@Layer("API")
+@Owner("Murugova Elena")
 public class DeletePetTest extends TestBase {
 
-    @Tag("petTest")
     @Test
+    @Tags({@Tag("api"), @Tag("critical"), @Tag("petTest")})
      void deletePetTest () {
         Integer petId = TestData.petId;
         String newPetData = TestData.newPetData;
@@ -35,8 +42,8 @@ public class DeletePetTest extends TestBase {
         });
     }
 
-    @Tag("petTest")
     @Test
+    @Tags({@Tag("api"), @Tag("normal"), @Tag("petTest")})
     void deleteNoExistedPetTest () {
         Integer noPetId = TestData.noPetId;
         given().filter(customLogFilter().withCustomTemplates()).contentType(JSON)
