@@ -36,7 +36,7 @@ public class Specs {
 
     public static ResponseSpecification findNoPurchaseOrderResponse  = new ResponseSpecBuilder()
             .log(LogDetail.BODY)
-            .expectStatusCode(200)
+            .expectStatusCode(404)
             .expectBody("code", is(1))
             .expectBody("type", is("error"))
             .expectBody("message", is("Order not found"))
