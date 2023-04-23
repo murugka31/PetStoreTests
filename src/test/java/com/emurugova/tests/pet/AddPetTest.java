@@ -46,4 +46,3 @@ public class AddPetTest extends TestBase {
         assertEquals(categoryName, pet.getCategory().getName());
     }
 }
-

@@ -24,5 +24,4 @@ public class Order {
     }
 
     private Integer petId;
-
 }

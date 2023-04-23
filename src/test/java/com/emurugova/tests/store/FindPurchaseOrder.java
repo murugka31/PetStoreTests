@@ -63,4 +63,3 @@ public class FindPurchaseOrder extends TestBase {
                 .spec(findNoPurchaseOrderResponse);
     }
 }
-

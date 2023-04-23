@@ -71,5 +71,4 @@ public class Specs {
             .expectBody("type", is("unknown"))
             .expectBody("message", is(userName))
             .build();
-
 }
