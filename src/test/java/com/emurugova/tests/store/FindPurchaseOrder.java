@@ -5,6 +5,7 @@ import com.emurugova.allure.Microservice;
 import com.emurugova.tests.TestBase;
 import com.emurugova.tests.TestData;
 import io.qameta.allure.Owner;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,7 @@ import static org.hamcrest.Matchers.is;
 public class FindPurchaseOrder extends TestBase {
 
     @Test
+    @DisplayName("Найти заказ на покупку")
     @Tags({@Tag("api"), @Tag("critical"), @Tag("storeTest")})
     void findPurchaseOrderById () {
         int purchaseOrder = TestData.purchaseOrder;
@@ -46,6 +48,7 @@ public class FindPurchaseOrder extends TestBase {
     }
 
     @Test
+    @DisplayName("Найти несуществующий заказ на покупку")
     @Tags({@Tag("api"), @Tag("normal"), @Tag("storeTest")})
     void findNoPurchaseOrderById () {
         int noPurchaseOrder = TestData.noPurchaseOrder;

@@ -5,6 +5,7 @@ import com.emurugova.allure.Microservice;
 import com.emurugova.tests.TestBase;
 import com.emurugova.tests.TestData;
 import io.qameta.allure.Owner;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,7 @@ import static io.restassured.http.ContentType.JSON;
 public class DeleteUser extends TestBase {
 
     @Test
+    @DisplayName("Удалить пользователя")
     @Tags({@Tag("api"), @Tag("critical"), @Tag("userTest")})
     void deleteExistedUser () {
         String userName = TestData.userName;
@@ -44,6 +46,7 @@ public class DeleteUser extends TestBase {
     }
 
     @Test
+    @DisplayName("Удалить несуществующего пользователя")
     @Tags({@Tag("api"), @Tag("normal"), @Tag("userTest")})
     void deleteNoExistedUser () {
         String noUserName = TestData.noUserName;

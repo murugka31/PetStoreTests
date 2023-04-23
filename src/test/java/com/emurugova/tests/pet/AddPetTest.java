@@ -6,6 +6,7 @@ import com.emurugova.models.Pet;
 import com.emurugova.tests.TestBase;
 import com.emurugova.tests.TestData;
 import io.qameta.allure.Owner;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class AddPetTest extends TestBase {
 
     @Test
+    @DisplayName("Добавить животное в базу данных")
     @Tags({@Tag("api"), @Tag("critical"), @Tag("petTest")})
     void addPetToTheListTest () {
         String newPetData = TestData.newPetData;

@@ -6,6 +6,7 @@ import com.emurugova.models.User;
 import com.emurugova.tests.TestBase;
 import com.emurugova.tests.TestData;
 import io.qameta.allure.Owner;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class GetUser extends TestBase {
 
     @Test
+    @DisplayName("Найти пользователя по имени")
     @Tags({@Tag("api"), @Tag("critical"), @Tag("userTest")})
     void getUserByName() {
         String newUserData = TestData.newUserData;

@@ -6,6 +6,7 @@ import com.emurugova.models.Order;
 import com.emurugova.tests.TestBase;
 import com.emurugova.tests.TestData;
 import io.qameta.allure.Owner;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class AddPurchaseOrder extends TestBase{
 
     @Test
+    @DisplayName("Добавить заказ на покупку")
     @Tags({@Tag("api"), @Tag("critical"), @Tag("storeTest")})
     void addOrderTest () {
         String newPurchaseOrderData = TestData.newPurchaseOrderData;

@@ -5,6 +5,7 @@ import com.emurugova.allure.Microservice;
 import com.emurugova.tests.TestBase;
 import com.emurugova.tests.TestData;
 import io.qameta.allure.Owner;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,7 @@ import static io.restassured.http.ContentType.JSON;
 public class DeletePurchaseOrder extends TestBase {
 
     @Test
+    @DisplayName("Удалить заказ на покупку")
     @Tags({@Tag("api"), @Tag("critical"), @Tag("storeTest")})
     void deleteExistedPurchaseOrder () {
         int purchaseOrder = TestData.purchaseOrder;
@@ -44,6 +46,7 @@ public class DeletePurchaseOrder extends TestBase {
     }
 
     @Test
+    @DisplayName("Удалить несуществующий заказ на покупку")
     @Tags({@Tag("api"), @Tag("normal"), @Tag("storeTest")})
     void deleteNoExistedPurchaseOrder () {
         int noPurchaseOrder = TestData.noPurchaseOrder;
