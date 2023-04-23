@@ -3,7 +3,6 @@ package com.emurugova.tests.pet;
 import com.emurugova.allure.Layer;
 import com.emurugova.allure.Microservice;
 import com.emurugova.tests.TestBase;
-import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
@@ -17,7 +16,6 @@ import static io.restassured.http.ContentType.JSON;
 @Microservice("Swagger Petstore")
 @Layer("API")
 @Owner("Murugova Elena")
-@Feature("GET")
 public class GetPetListTest extends TestBase {
 
     @Test
