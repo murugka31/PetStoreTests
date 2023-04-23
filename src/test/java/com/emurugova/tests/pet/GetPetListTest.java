@@ -3,6 +3,7 @@ package com.emurugova.tests.pet;
 import com.emurugova.allure.Layer;
 import com.emurugova.allure.Microservice;
 import com.emurugova.tests.TestBase;
+import io.qameta.allure.AllureId;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -20,6 +21,7 @@ import static io.restassured.http.ContentType.JSON;
 public class GetPetListTest extends TestBase {
 
     @Test
+    @AllureId("17561")
     @DisplayName("Вывести список доступных животных")
     @Tags({@Tag("api"), @Tag("normal"), @Tag("petTest")})
     void getAvailablePetsListTest () {
@@ -32,6 +34,7 @@ public class GetPetListTest extends TestBase {
     }
 
     @Test
+    @AllureId("17562")
     @DisplayName("Вывести список ожидающих животных")
     @Tags({@Tag("api"), @Tag("normal"), @Tag("petTest")})
     void getPendingPetsListTest () {
@@ -45,6 +48,7 @@ public class GetPetListTest extends TestBase {
     }
 
     @Test
+    @AllureId("17560")
     @DisplayName("Вывести список проданных животных")
     @Tags({@Tag("api"), @Tag("normal"), @Tag("petTest")})
     void getSoldPetsListTest () {

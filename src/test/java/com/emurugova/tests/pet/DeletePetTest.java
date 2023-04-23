@@ -4,6 +4,7 @@ import com.emurugova.allure.Layer;
 import com.emurugova.allure.Microservice;
 import com.emurugova.tests.TestBase;
 import com.emurugova.tests.TestData;
+import io.qameta.allure.AllureId;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -22,6 +23,7 @@ import static io.restassured.http.ContentType.JSON;
 public class DeletePetTest extends TestBase {
 
     @Test
+    @AllureId("17566")
     @DisplayName("Удалить животное из базы данных по ID")
     @Tags({@Tag("api"), @Tag("critical"), @Tag("petTest")})
      void deletePetTest () {
@@ -45,6 +47,7 @@ public class DeletePetTest extends TestBase {
     }
 
     @Test
+    @AllureId("17567 ")
     @DisplayName("Удалить несуществующее животное из базы данных")
     @Tags({@Tag("api"), @Tag("normal"), @Tag("petTest")})
     void deleteNoExistedPetTest () {

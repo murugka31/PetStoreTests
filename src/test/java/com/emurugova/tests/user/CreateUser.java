@@ -4,6 +4,7 @@ import com.emurugova.allure.Layer;
 import com.emurugova.allure.Microservice;
 import com.emurugova.tests.TestBase;
 import com.emurugova.tests.TestData;
+import io.qameta.allure.AllureId;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -21,6 +22,7 @@ import static io.restassured.http.ContentType.JSON;
 public class CreateUser extends TestBase {
 
     @Test
+    @AllureId("17555")
     @DisplayName("Создать нового пользователя")
     @Tags({@Tag("api"), @Tag("critical"), @Tag("userTest")})
     void createNewUserTest () {

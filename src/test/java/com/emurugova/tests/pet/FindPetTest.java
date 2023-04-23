@@ -4,6 +4,7 @@ import com.emurugova.allure.Layer;
 import com.emurugova.allure.Microservice;
 import com.emurugova.tests.TestBase;
 import com.emurugova.tests.TestData;
+import io.qameta.allure.AllureId;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -25,6 +26,7 @@ import static org.hamcrest.Matchers.is;
 public class FindPetTest extends TestBase {
 
     @Test
+    @AllureId("17564")
     @DisplayName("Найти животное в базе данных по ID")
     @Tags({@Tag("api"), @Tag("critical"), @Tag("petTest")})
     void findPetTest () {
@@ -51,6 +53,7 @@ public class FindPetTest extends TestBase {
     }
 
     @Test
+    @AllureId("17563")
     @DisplayName("Найти несуществующее животное в базе данных")
     @Tags({@Tag("api"), @Tag("normal"), @Tag("petTest")})
     void findNoPetTest () {

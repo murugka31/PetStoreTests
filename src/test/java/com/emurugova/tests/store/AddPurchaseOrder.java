@@ -5,6 +5,7 @@ import com.emurugova.allure.Microservice;
 import com.emurugova.models.Order;
 import com.emurugova.tests.TestBase;
 import com.emurugova.tests.TestData;
+import io.qameta.allure.AllureId;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -23,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class AddPurchaseOrder extends TestBase{
 
     @Test
+    @AllureId("17558")
     @DisplayName("Добавить заказ на покупку")
     @Tags({@Tag("api"), @Tag("critical"), @Tag("storeTest")})
     void addOrderTest () {
