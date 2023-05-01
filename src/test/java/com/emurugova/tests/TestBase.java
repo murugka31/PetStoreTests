@@ -1,19 +1,15 @@
 package com.emurugova.tests;
 
-import com.emurugova.config.MainConfig;
+import io.qameta.allure.junit5.AllureJunit5;
 import io.restassured.RestAssured;
-import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import static java.lang.String.format;
-
+@ExtendWith({AllureJunit5.class})
 public class TestBase {
-
-    public static MainConfig config = ConfigFactory.create(MainConfig.class, System.getProperties());
 
     @BeforeAll
     static void setUp() {
-        String hostname = config.hostname();
-        RestAssured.baseURI = format("https://%s", hostname);;
+        RestAssured.baseURI = "https://petstore.swagger.io/v2/";
     }
 }
