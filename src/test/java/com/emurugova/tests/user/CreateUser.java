@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.emurugova.filters.CustomLogFilter.customLogFilter;
 import static com.emurugova.specs.Specs.createNewUserResponse;
+import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 
@@ -27,6 +28,7 @@ public class CreateUser extends TestBase {
     @Tags({@Tag("api"), @Tag("critical"), @Tag("userTest")})
     void createNewUserTest () {
         String newUserData = TestData.newUserData;
+        step("Добавляем нового пользователя", () -> {
         given().filter(customLogFilter().withCustomTemplates())
                .contentType(JSON)
                .body(newUserData)
@@ -34,5 +36,6 @@ public class CreateUser extends TestBase {
                .post("user/")
                .then()
                .spec(createNewUserResponse);
+        });
     }
 }

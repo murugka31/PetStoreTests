@@ -30,7 +30,7 @@ public class FindPurchaseOrder extends TestBase {
     void findPurchaseOrderById () {
         int purchaseOrder = TestData.purchaseOrder;
         String newPurchaseOrderData = TestData.newPurchaseOrderData;
-        step("Create a purchase order", () -> {
+        step("Добавляем новый заказ на покупку животного", () -> {
         given().filter(customLogFilter().withCustomTemplates())
                 .contentType(JSON)
                 .body(newPurchaseOrderData)
@@ -38,7 +38,7 @@ public class FindPurchaseOrder extends TestBase {
                 .post("store/order/");
         });
 
-        step("Find a purchase order", () -> {
+        step("Находим заказ на покупку животного", () -> {
         given().filter(customLogFilter().withCustomTemplates())
                 .contentType(JSON)
                 .when()
@@ -55,11 +55,13 @@ public class FindPurchaseOrder extends TestBase {
     @Tags({@Tag("api"), @Tag("normal"), @Tag("storeTest")})
     void findNoPurchaseOrderById () {
         int noPurchaseOrder = TestData.noPurchaseOrder;
+        step("Находим несуществующий заказ на покупку животного", () -> {
         given().filter(customLogFilter().withCustomTemplates())
                 .contentType(JSON)
                 .when()
                 .get("store/order/"+noPurchaseOrder)
                 .then()
                 .spec(findNoPurchaseOrderResponse);
+        });
     }
 }

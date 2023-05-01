@@ -29,7 +29,7 @@ public class DeleteUser extends TestBase {
     void deleteExistedUser () {
         String userName = TestData.userName;
         String newUserData = TestData.newUserData;
-        step("Create an user", () -> {
+        step("Добавляем нового пользователя", () -> {
         given().filter(customLogFilter().withCustomTemplates())
                .contentType(JSON)
                .body(newUserData)
@@ -37,7 +37,7 @@ public class DeleteUser extends TestBase {
                .post("user/");
         });
 
-        step("Delete an user", () -> {
+        step("Удаляем пользователя", () -> {
         given().filter(customLogFilter().withCustomTemplates())
                .contentType(JSON)
                .when()
@@ -53,11 +53,13 @@ public class DeleteUser extends TestBase {
     @Tags({@Tag("api"), @Tag("normal"), @Tag("userTest")})
     void deleteNoExistedUser () {
         String noUserName = TestData.noUserName;
+        step("Удаляем несуществующего пользователя", () -> {
         given().filter(customLogFilter().withCustomTemplates())
                .contentType(JSON)
                .when()
                .delete("user/"+noUserName)
                .then()
                .statusCode(404);
+        });
     }
 }

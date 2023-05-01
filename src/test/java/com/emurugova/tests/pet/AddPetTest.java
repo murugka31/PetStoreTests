@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import static com.emurugova.filters.CustomLogFilter.customLogFilter;
 import static com.emurugova.specs.Specs.petResponse;
 import static com.emurugova.tests.TestData.*;
+import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,21 +29,23 @@ public class AddPetTest extends TestBase {
     @AllureId("17565")
     @DisplayName("Добавить животное в базу данных")
     @Tags({@Tag("api"), @Tag("critical"), @Tag("petTest")})
-    void addPetToTheListTest () {
+    void addPetToTheListTest() {
         String newPetData = TestData.newPetData;
-        Pet pet = given()
-                .filter(customLogFilter().withCustomTemplates())
-                .contentType(JSON)
-                .body(newPetData)
-                .when()
-                .post("pet/")
-                .then()
-                .spec(petResponse)
-                .extract().as(Pet.class);
+        step("Добавляем животное в БД", () -> {
+            Pet pet = given()
+                    .filter(customLogFilter().withCustomTemplates())
+                    .contentType(JSON)
+                    .body(newPetData)
+                    .when()
+                    .post("pet/")
+                    .then()
+                    .spec(petResponse)
+                    .extract().as(Pet.class);
 
-        assertEquals(petId, pet.getId());
-        assertEquals(petName, pet.getName());
-        assertEquals(petStatus, pet.getStatus());
-        assertEquals(categoryName, pet.getCategory().getName());
+            assertEquals(petId, pet.getId());
+            assertEquals(petName, pet.getName());
+            assertEquals(petStatus, pet.getStatus());
+            assertEquals(categoryName, pet.getCategory().getName());
+        });
     }
 }

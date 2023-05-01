@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.emurugova.filters.CustomLogFilter.customLogFilter;
 import static com.emurugova.specs.Specs.petResponse;
+import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 
@@ -24,40 +25,46 @@ public class GetPetListTest extends TestBase {
     @AllureId("17561")
     @DisplayName("Вывести список доступных животных")
     @Tags({@Tag("api"), @Tag("normal"), @Tag("petTest")})
-    void getAvailablePetsListTest () {
-       String status = "available";
-       given().filter(customLogFilter().withCustomTemplates())
-              .when()
-              .get("pet/findByStatus?status="+status)
-              .then()
-              .spec(petResponse);
+    void getAvailablePetsListTest() {
+        String status = "available";
+        step("Находим всех животных со статусом Доступны", () -> {
+        given().filter(customLogFilter().withCustomTemplates())
+                .when()
+                .get("pet/findByStatus?status=" + status)
+                .then()
+                .spec(petResponse);
+        });
     }
 
     @Test
     @AllureId("17562")
     @DisplayName("Вывести список ожидающих животных")
     @Tags({@Tag("api"), @Tag("normal"), @Tag("petTest")})
-    void getPendingPetsListTest () {
+    void getPendingPetsListTest() {
         String status = "pending";
-        given().filter(customLogFilter().withCustomTemplates())
-               .contentType(JSON)
-               .when()
-               .get("pet/findByStatus?status="+status)
-               .then()
-               .spec(petResponse);
+        step("Находим всех животных со статусом Ожидают", () -> {
+            given().filter(customLogFilter().withCustomTemplates())
+                    .contentType(JSON)
+                    .when()
+                    .get("pet/findByStatus?status=" + status)
+                    .then()
+                    .spec(petResponse);
+        });
     }
 
     @Test
     @AllureId("17560")
     @DisplayName("Вывести список проданных животных")
     @Tags({@Tag("api"), @Tag("normal"), @Tag("petTest")})
-    void getSoldPetsListTest () {
+    void getSoldPetsListTest() {
         String status = "sold";
-        given().filter(customLogFilter().withCustomTemplates())
-               .contentType(JSON)
-               .when()
-               .get("pet/findByStatus?status="+status)
-               .then()
-               .spec(petResponse);
+        step("Находим всех животных со статусом Проданы", () -> {
+            given().filter(customLogFilter().withCustomTemplates())
+                    .contentType(JSON)
+                    .when()
+                    .get("pet/findByStatus?status=" + status)
+                    .then()
+                    .spec(petResponse);
+        });
     }
 }

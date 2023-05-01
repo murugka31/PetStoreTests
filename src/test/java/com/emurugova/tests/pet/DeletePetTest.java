@@ -26,23 +26,23 @@ public class DeletePetTest extends TestBase {
     @AllureId("17566")
     @DisplayName("Удалить животное из базы данных по ID")
     @Tags({@Tag("api"), @Tag("critical"), @Tag("petTest")})
-     void deletePetTest () {
+    void deletePetTest() {
         Integer petId = TestData.petId;
         String newPetData = TestData.newPetData;
-        step("Create a pet", () -> {
-        given().filter(customLogFilter().withCustomTemplates())
-               .contentType(JSON)
-               .body(newPetData)
-               .when()
-               .post("pet/");
-                });
+        step("Добавляем животное в БД", () -> {
+            given().filter(customLogFilter().withCustomTemplates())
+                    .contentType(JSON)
+                    .body(newPetData)
+                    .when()
+                    .post("pet/");
+        });
 
-        step("Delete a pet", () -> {
-        given().filter(customLogFilter().withCustomTemplates()).contentType(JSON)
-               .when()
-               .delete("pet/"+petId)
-               .then()
-               .spec(deletePetResponse);
+        step("Удаляем животное из БД", () -> {
+            given().filter(customLogFilter().withCustomTemplates()).contentType(JSON)
+                    .when()
+                    .delete("pet/" + petId)
+                    .then()
+                    .spec(deletePetResponse);
         });
     }
 
@@ -50,13 +50,15 @@ public class DeletePetTest extends TestBase {
     @AllureId("17567 ")
     @DisplayName("Удалить несуществующее животное из базы данных")
     @Tags({@Tag("api"), @Tag("normal"), @Tag("petTest")})
-    void deleteNoExistedPetTest () {
+    void deleteNoExistedPetTest() {
         Integer noPetId = TestData.noPetId;
-        given().filter(customLogFilter().withCustomTemplates()).contentType(JSON)
-               .contentType(JSON)
-               .when()
-               .delete("pet/"+noPetId)
-               .then()
-               .statusCode(404);
+        step("Удаляем несуществующее животное из БД", () -> {
+            given().filter(customLogFilter().withCustomTemplates()).contentType(JSON)
+                    .contentType(JSON)
+                    .when()
+                    .delete("pet/" + noPetId)
+                    .then()
+                    .statusCode(404);
+        });
     }
 }

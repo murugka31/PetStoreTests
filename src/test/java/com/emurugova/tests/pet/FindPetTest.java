@@ -29,26 +29,26 @@ public class FindPetTest extends TestBase {
     @AllureId("17564")
     @DisplayName("Найти животное в базе данных по ID")
     @Tags({@Tag("api"), @Tag("critical"), @Tag("petTest")})
-    void findPetTest () {
+    void findPetTest() {
         int petId = TestData.petId;
         String newPetData = TestData.newPetData;
-        step("Create a pet", () -> {
-        given().filter(customLogFilter().withCustomTemplates())
-               .contentType(JSON)
-               .body(newPetData)
-               .when()
-               .post("pet/");
+        step("Добавляем животное в БД", () -> {
+            given().filter(customLogFilter().withCustomTemplates())
+                    .contentType(JSON)
+                    .body(newPetData)
+                    .when()
+                    .post("pet/");
         });
 
-        step("Find a pet", () -> {
-        given().filter(customLogFilter().withCustomTemplates())
-               .contentType(JSON)
-               .when()
-               .get("pet/"+petId)
-               .then()
-               .spec(petResponse)
-               .body("name", is(petName))
-               .body("id", is(petId));
+        step("Находим животное в БД", () -> {
+            given().filter(customLogFilter().withCustomTemplates())
+                    .contentType(JSON)
+                    .when()
+                    .get("pet/" + petId)
+                    .then()
+                    .spec(petResponse)
+                    .body("name", is(petName))
+                    .body("id", is(petId));
         });
     }
 
@@ -56,13 +56,15 @@ public class FindPetTest extends TestBase {
     @AllureId("17563")
     @DisplayName("Найти несуществующее животное в базе данных")
     @Tags({@Tag("api"), @Tag("normal"), @Tag("petTest")})
-    void findNoPetTest () {
+    void findNoPetTest() {
         int noPetId = TestData.noPetId;
-        given().filter(customLogFilter().withCustomTemplates())
-               .contentType(JSON)
-               .when()
-               .get("pet/"+noPetId)
-               .then()
-               .spec(noExistedPetResponse);
+        step("Находим несуществующее животное в БД", () -> {
+            given().filter(customLogFilter().withCustomTemplates())
+                    .contentType(JSON)
+                    .when()
+                    .get("pet/" + noPetId)
+                    .then()
+                    .spec(noExistedPetResponse);
+        });
     }
 }

@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.emurugova.filters.CustomLogFilter.customLogFilter;
 import static com.emurugova.tests.TestData.*;
+import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,6 +30,7 @@ public class AddPurchaseOrder extends TestBase{
     @Tags({@Tag("api"), @Tag("critical"), @Tag("storeTest")})
     void addOrderTest () {
         String newPurchaseOrderData = TestData.newPurchaseOrderData;
+        step("Добавляем новый заказ на покупку животного", () -> {
         Order order = given()
                 .filter(customLogFilter().withCustomTemplates())
                 .contentType(JSON)
@@ -41,5 +43,6 @@ public class AddPurchaseOrder extends TestBase{
 
         assertEquals(purchaseOrder, order.getId());
         assertEquals(petId, order.getPetId());
+        });
     }
 }

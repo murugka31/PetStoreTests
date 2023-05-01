@@ -27,15 +27,15 @@ public class GetUser extends TestBase {
     @Tags({@Tag("api"), @Tag("critical"), @Tag("userTest")})
     void getUserByName() {
         String newUserData = TestData.newUserData;
-        step("Create an user", () -> {
+        step("Добавляем нового пользователя в БД", () -> {
             given().filter(customLogFilter().withCustomTemplates()).contentType(JSON)
                     .body(newUserData)
                     .when()
                     .post("user/");
         });
 
-        step("Find an user", () -> {
-            User user = given().contentType(JSON)
+        step("Находим пользователя в БД", () -> {
+            User user = given().filter(customLogFilter().withCustomTemplates()).contentType(JSON)
                     .when()
                     .get("user/" + userName)
                     .then()

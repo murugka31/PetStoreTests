@@ -29,7 +29,7 @@ public class DeletePurchaseOrder extends TestBase {
     void deleteExistedPurchaseOrder () {
         int purchaseOrder = TestData.purchaseOrder;
         String newPurchaseOrderData = TestData.newPurchaseOrderData;
-        step("Create a purchase order", () -> {
+        step("Добавляем новый заказ на покупку животного", () -> {
         given().filter(customLogFilter().withCustomTemplates())
                .contentType(JSON)
                .body(newPurchaseOrderData)
@@ -37,7 +37,7 @@ public class DeletePurchaseOrder extends TestBase {
                .post("store/order/");
         });
 
-        step("Delete a purchase order", () -> {
+        step("Удаляем заказ на покупку животного", () -> {
         given().filter(customLogFilter().withCustomTemplates())
                .contentType(JSON)
                .when()
@@ -53,11 +53,13 @@ public class DeletePurchaseOrder extends TestBase {
     @Tags({@Tag("api"), @Tag("normal"), @Tag("storeTest")})
     void deleteNoExistedPurchaseOrder () {
         int noPurchaseOrder = TestData.noPurchaseOrder;
+        step("Удаляем несуществующий заказ на покупку животного", () -> {
         given().filter(customLogFilter().withCustomTemplates())
                .contentType(JSON)
                .when()
                .delete("store/order/"+noPurchaseOrder)
                .then()
                .spec(deleteNoPurchaseOrderResponse);
+        });
     }
 }

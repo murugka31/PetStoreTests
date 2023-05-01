@@ -5,6 +5,8 @@ import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import static io.qameta.allure.Allure.step;
+
 @ExtendWith({AllureJunit5.class})
 public class TestBase {
 
