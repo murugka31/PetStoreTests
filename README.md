@@ -4,7 +4,7 @@
 
 ![2023-04-23_18-46-17](https://user-images.githubusercontent.com/118747260/233849913-de578971-014f-468e-bc3b-568fab8eae84.png)
 
-## Автоматизация API тестов на основе  [Swagger Petstore](https://https://petstore.swagger.io//)
+## Автоматизация API тестов на основе  [Swagger Petstore](https://petstore.swagger.io//)
 
 ## :dog: :cat: :rabbit: Интеграция с Jenkins
 ![2023-04-23_17-29-10](https://user-images.githubusercontent.com/118747260/233848633-2ec07b2e-7965-4dde-91c7-d0e2790a94a4.png)
