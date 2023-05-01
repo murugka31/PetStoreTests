@@ -6,6 +6,14 @@
 
 ## Автоматизация API тестов на основе  [Swagger Petstore](https://petstore.swagger.io//)
 
+## :dog: :cat: :rabbit: Языки и инструменты
+<h3 align="left">Языки и инструменты, которые были использованы </h3>
+
+| Java | JUnit5 | Rest-assured | Gradle | Intelij IDEA | Allure Report | Allure Testops | Jenkins | Telegram |
+|------|--------|--------------|--------|--------------|---------------|----------------|---------|----------|
+|:------:|:----:|:----:|:------:|:------:|
+|![](images/JAVA.svg)|![](images/Junit5.svg)|<img src="images/Rest-assured.png" width=70 height=70>|![](images/Gradle.svg)|![](images/IDEA.svg)|![](images/AllureReport.svg)|![](images/AllureTestops.svg)|![](images/Jenkins.svg)|![](images/Telegram.svg)|
+
 ## :dog: :cat: :rabbit: Интеграция с Jenkins
 ![2023-04-23_17-29-10](https://user-images.githubusercontent.com/118747260/233848633-2ec07b2e-7965-4dde-91c7-d0e2790a94a4.png)
 В Jenkins запускается сборка с параметрами:
@@ -49,15 +57,5 @@ gradle clean user_tests
 https://user-images.githubusercontent.com/118747260/233849143-b49e4b18-11a4-43f7-a657-392169de194c.mp4
 
 
-## :dog: :cat: :rabbit: Языки и инструменты
-<h3 align="left">Языки и инструменты, которые были использованы </h3>
-
-| IntelliJ IDEA | Java | Gradle | Junit5 | Selenide |
-|:------:|:----:|:----:|:------:|:------:|
-| <img src="https://github.com/Roman-1990/bip-test/blob/master/img/logo/Intelij_IDEA.png" width="40" height="40"> | <img src="https://github.com/Roman-1990/bip-test/blob/master/img/logo/Java.png" width="40" height="40"> | <img src="https://github.com/Roman-1990/bip-test/blob/master/img/logo/Gradle.png" width="40" height="40"> | <img src="https://github.com/Roman-1990/bip-test/blob/master/img/logo/JUnit5.png" width="40" height="40"> | <img src="https://github.com/Roman-1990/bip-test/blob/master/img/logo/Selenide.png" width="40" height="40"> |
-
-| GitHub | Jenkins | Allure Report | Allure TestOps | Telegram |
-|:------:|:----:|:----:|:------:|:------:|
-| <img src="https://github.com/Roman-1990/bip-test/blob/master/img/logo/Github.png" width="40" height="40"> | <img src="https://github.com/Roman-1990/bip-test/blob/master/img/logo/Jenkins.png" width="40" height="40">| <img src="https://github.com/Roman-1990/bip-test/blob/master/img/logo/Allure_Report.png" width="40" height="40"> | <img src="https://github.com/Roman-1990/bip-test/blob/master/img/logo/AllureTestOps.png" width="40" height="40"> | <img src="https://github.com/Roman-1990/bip-test/blob/master/img/logo/Telegram.png" width="40" height="40"> |
 
 :heart: <a target="_blank" href="https://github.com/murugka31">github.com/murugka31</a><br/>
