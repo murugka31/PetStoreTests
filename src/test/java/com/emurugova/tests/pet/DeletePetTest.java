@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
-import static com.emurugova.filters.CustomLogFilter.customLogFilter;
 import static com.emurugova.specs.Specs.*;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.*;
@@ -30,7 +29,7 @@ public class DeletePetTest extends TestBase {
         Integer petId = TestData.petId;
         String newPetData = TestData.newPetData;
         step("Добавляем животное в БД", () -> {
-            given().filter(customLogFilter().withCustomTemplates())
+             given().spec(request)
                     .contentType(JSON)
                     .body(newPetData)
                     .when()
@@ -38,11 +37,11 @@ public class DeletePetTest extends TestBase {
         });
 
         step("Удаляем животное из БД", () -> {
-            given().filter(customLogFilter().withCustomTemplates()).contentType(JSON)
+             given().spec(request)
                     .when()
                     .delete("pet/" + petId)
                     .then()
-                    .spec(deletePetResponse);
+                    .spec(successfulResponse);
         });
     }
 
@@ -53,8 +52,7 @@ public class DeletePetTest extends TestBase {
     void deleteNoExistedPetTest() {
         Integer noPetId = TestData.noPetId;
         step("Удаляем несуществующее животное из БД", () -> {
-            given().filter(customLogFilter().withCustomTemplates()).contentType(JSON)
-                    .contentType(JSON)
+             given().spec(request)
                     .when()
                     .delete("pet/" + noPetId)
                     .then()

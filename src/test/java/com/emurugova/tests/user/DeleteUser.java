@@ -11,11 +11,10 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
-import static com.emurugova.filters.CustomLogFilter.customLogFilter;
 import static com.emurugova.specs.Specs.*;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
+import static org.hamcrest.Matchers.is;
 
 @Microservice("Swagger Petstore")
 @Layer("API")
@@ -30,20 +29,21 @@ public class DeleteUser extends TestBase {
         String userName = TestData.userName;
         String newUserData = TestData.newUserData;
         step("Добавляем нового пользователя", () -> {
-        given().filter(customLogFilter().withCustomTemplates())
-               .contentType(JSON)
+        given().spec(request)
                .body(newUserData)
                .when()
                .post("user/");
         });
 
         step("Удаляем пользователя", () -> {
-        given().filter(customLogFilter().withCustomTemplates())
-               .contentType(JSON)
+        given().spec(request)
                .when()
                .delete("user/"+userName)
                .then()
-               .spec(deleteExistedUserResponse);
+               .spec(successfulResponse)
+               .body("code", is(200))
+               .body("type", is("unknown"))
+               .body("message", is(userName));
         });
     }
 
@@ -54,8 +54,7 @@ public class DeleteUser extends TestBase {
     void deleteNoExistedUser () {
         String noUserName = TestData.noUserName;
         step("Удаляем несуществующего пользователя", () -> {
-        given().filter(customLogFilter().withCustomTemplates())
-               .contentType(JSON)
+        given().spec(request)
                .when()
                .delete("user/"+noUserName)
                .then()

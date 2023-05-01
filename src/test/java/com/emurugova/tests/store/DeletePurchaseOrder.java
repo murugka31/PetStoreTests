@@ -11,11 +11,10 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
-import static com.emurugova.filters.CustomLogFilter.customLogFilter;
 import static com.emurugova.specs.Specs.*;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
+import static org.hamcrest.Matchers.is;
 
 @Microservice("Swagger Petstore")
 @Layer("API")
@@ -30,20 +29,20 @@ public class DeletePurchaseOrder extends TestBase {
         int purchaseOrder = TestData.purchaseOrder;
         String newPurchaseOrderData = TestData.newPurchaseOrderData;
         step("Добавляем новый заказ на покупку животного", () -> {
-        given().filter(customLogFilter().withCustomTemplates())
-               .contentType(JSON)
+        given().spec(request)
                .body(newPurchaseOrderData)
                .when()
                .post("store/order/");
         });
 
         step("Удаляем заказ на покупку животного", () -> {
-        given().filter(customLogFilter().withCustomTemplates())
-               .contentType(JSON)
+        given().spec(request)
                .when()
                .delete("store/order/"+purchaseOrder)
                .then()
-               .spec(deletePurchaseOrderResponse);
+               .spec(successfulResponse)
+               .body("code", is(200))
+               .body("type", is("unknown"));
         });
     }
 
@@ -54,12 +53,14 @@ public class DeletePurchaseOrder extends TestBase {
     void deleteNoExistedPurchaseOrder () {
         int noPurchaseOrder = TestData.noPurchaseOrder;
         step("Удаляем несуществующий заказ на покупку животного", () -> {
-        given().filter(customLogFilter().withCustomTemplates())
-               .contentType(JSON)
+        given().spec(request)
                .when()
                .delete("store/order/"+noPurchaseOrder)
                .then()
-               .spec(deleteNoPurchaseOrderResponse);
+               .spec(unsuccessfulResponse )
+               .body("code", is(404))
+               .body("type", is("unknown"))
+               .body("message", is("Order Not Found"));
         });
     }
 }

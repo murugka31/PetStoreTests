@@ -11,11 +11,11 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
-import static com.emurugova.filters.CustomLogFilter.customLogFilter;
-import static com.emurugova.specs.Specs.createNewUserResponse;
+import static com.emurugova.specs.Specs.request;
+import static com.emurugova.specs.Specs.successfulResponse;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
+import static org.hamcrest.Matchers.is;
 
 @Microservice("Swagger Petstore")
 @Layer("API")
@@ -29,13 +29,14 @@ public class CreateUser extends TestBase {
     void createNewUserTest () {
         String newUserData = TestData.newUserData;
         step("Добавляем нового пользователя", () -> {
-        given().filter(customLogFilter().withCustomTemplates())
-               .contentType(JSON)
+        given().spec(request)
                .body(newUserData)
                .when()
                .post("user/")
                .then()
-               .spec(createNewUserResponse);
+               .spec(successfulResponse)
+               .body("code", is(200))
+               .body("type", is("unknown"));
         });
     }
 }

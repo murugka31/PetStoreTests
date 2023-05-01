@@ -12,11 +12,11 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
-import static com.emurugova.filters.CustomLogFilter.customLogFilter;
+import static com.emurugova.specs.Specs.request;
+import static com.emurugova.specs.Specs.successfulResponse;
 import static com.emurugova.tests.TestData.*;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Microservice("Swagger Petstore")
@@ -32,13 +32,12 @@ public class AddPurchaseOrder extends TestBase{
         String newPurchaseOrderData = TestData.newPurchaseOrderData;
         step("Добавляем новый заказ на покупку животного", () -> {
         Order order = given()
-                .filter(customLogFilter().withCustomTemplates())
-                .contentType(JSON)
+                .spec(request)
                 .body(newPurchaseOrderData)
                 .when()
                 .post("store/order/")
                 .then()
-                .log().body()
+                .spec(successfulResponse)
                 .extract().as(Order.class);
 
         assertEquals(purchaseOrder, order.getId());

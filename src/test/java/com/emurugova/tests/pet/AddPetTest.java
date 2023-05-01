@@ -12,12 +12,10 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
-import static com.emurugova.filters.CustomLogFilter.customLogFilter;
-import static com.emurugova.specs.Specs.petResponse;
+import static com.emurugova.specs.Specs.*;
 import static com.emurugova.tests.TestData.*;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Microservice("Swagger Petstore")
@@ -33,13 +31,12 @@ public class AddPetTest extends TestBase {
         String newPetData = TestData.newPetData;
         step("Добавляем животное в БД", () -> {
             Pet pet = given()
-                    .filter(customLogFilter().withCustomTemplates())
-                    .contentType(JSON)
+                    .spec(request)
                     .body(newPetData)
                     .when()
                     .post("pet/")
                     .then()
-                    .spec(petResponse)
+                    .spec(successfulResponse)
                     .extract().as(Pet.class);
 
             assertEquals(petId, pet.getId());

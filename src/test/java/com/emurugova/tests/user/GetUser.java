@@ -9,11 +9,10 @@ import io.qameta.allure.AllureId;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.*;
 
-import static com.emurugova.filters.CustomLogFilter.customLogFilter;
+import static com.emurugova.specs.Specs.request;
 import static com.emurugova.tests.TestData.*;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Microservice("Swagger Petstore")
@@ -28,18 +27,19 @@ public class GetUser extends TestBase {
     void getUserByName() {
         String newUserData = TestData.newUserData;
         step("Добавляем нового пользователя в БД", () -> {
-            given().filter(customLogFilter().withCustomTemplates()).contentType(JSON)
-                    .body(newUserData)
-                    .when()
-                    .post("user/");
+            given().spec(request)
+                   .body(newUserData)
+                   .when()
+                   .post("user/");
         });
 
         step("Находим пользователя в БД", () -> {
-            User user = given().filter(customLogFilter().withCustomTemplates()).contentType(JSON)
-                    .when()
-                    .get("user/" + userName)
-                    .then()
-                    .extract().as(User.class);
+            User user = given()
+                   .spec(request)
+                   .when()
+                   .get("user/" + userName)
+                   .then()
+                   .extract().as(User.class);
 
             assertEquals(userId, user.getId());
             assertEquals(userName, user.getUsername());

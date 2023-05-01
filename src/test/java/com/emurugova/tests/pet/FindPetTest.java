@@ -11,9 +11,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
-import static com.emurugova.filters.CustomLogFilter.customLogFilter;
-import static com.emurugova.specs.Specs.noExistedPetResponse;
-import static com.emurugova.specs.Specs.petResponse;
+import static com.emurugova.specs.Specs.*;
 import static com.emurugova.tests.TestData.petName;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
@@ -33,7 +31,7 @@ public class FindPetTest extends TestBase {
         int petId = TestData.petId;
         String newPetData = TestData.newPetData;
         step("Добавляем животное в БД", () -> {
-            given().filter(customLogFilter().withCustomTemplates())
+             given().spec(request)
                     .contentType(JSON)
                     .body(newPetData)
                     .when()
@@ -41,12 +39,12 @@ public class FindPetTest extends TestBase {
         });
 
         step("Находим животное в БД", () -> {
-            given().filter(customLogFilter().withCustomTemplates())
+             given().spec(request)
                     .contentType(JSON)
                     .when()
                     .get("pet/" + petId)
                     .then()
-                    .spec(petResponse)
+                    .spec(successfulResponse)
                     .body("name", is(petName))
                     .body("id", is(petId));
         });
@@ -59,12 +57,15 @@ public class FindPetTest extends TestBase {
     void findNoPetTest() {
         int noPetId = TestData.noPetId;
         step("Находим несуществующее животное в БД", () -> {
-            given().filter(customLogFilter().withCustomTemplates())
+             given().spec(request)
                     .contentType(JSON)
                     .when()
                     .get("pet/" + noPetId)
                     .then()
-                    .spec(noExistedPetResponse);
+                    .spec(unsuccessfulResponse)
+                    .body("code", is(1))
+                    .body("type", is("error"))
+                    .body("message", is("Pet not found"));
         });
     }
 }
