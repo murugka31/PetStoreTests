@@ -11,7 +11,6 @@
 
 | Java | JUnit5 | Rest-assured | Gradle | Intelij IDEA | Allure Report | Allure Testops | Jenkins | Telegram |
 |------|--------|--------------|--------|--------------|---------------|----------------|---------|----------|
-|:------:|:----:|:----:|:------:|:------:|
 |![](images/JAVA.svg)|![](images/Junit5.svg)|<img src="images/Rest-assured.png" width=70 height=70>|![](images/Gradle.svg)|![](images/IDEA.svg)|![](images/AllureReport.svg)|![](images/AllureTestops.svg)|![](images/Jenkins.svg)|![](images/Telegram.svg)|
 
 ## :dog: :cat: :rabbit: Интеграция с Jenkins
