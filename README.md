@@ -6,8 +6,7 @@
 
 ## Автоматизация API тестов на основе  [Swagger Petstore](https://petstore.swagger.io//)
 
-## :dog: :cat: :rabbit: Языки и инструменты
-<h3 align="left">Языки и инструменты, которые были использованы </h3>
+## :dog: :cat: :rabbit: Языки и инструменты, которые были использованы
 
 | Java | JUnit5 | Rest-assured | Gradle | Intelij IDEA | Allure Report | Allure Testops | Jenkins | Telegram |
 |------|--------|--------------|--------|--------------|---------------|----------------|---------|----------|
