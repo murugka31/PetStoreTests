@@ -7,12 +7,13 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 
-    private Integer id;
-    private String username;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String password;
-    private String phone;
-    private Integer userStatus;
+    public Integer id;
+    public String username;
+    public String firstName;
+    public String lastName;
+    public String email;
+    public String password;
+    public String phone;
+    public Integer userStatus;
 }
+

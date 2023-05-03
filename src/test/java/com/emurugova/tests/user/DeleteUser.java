@@ -2,6 +2,7 @@ package com.emurugova.tests.user;
 
 import com.emurugova.allure.Layer;
 import com.emurugova.allure.Microservice;
+import com.emurugova.models.User;
 import com.emurugova.tests.TestBase;
 import com.emurugova.tests.TestData;
 import io.qameta.allure.AllureId;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 import static com.emurugova.specs.Specs.*;
+import static com.emurugova.tests.TestData.faker;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
@@ -26,11 +28,18 @@ public class DeleteUser extends TestBase {
     @DisplayName("Удалить пользователя")
     @Tags({@Tag("api"), @Tag("critical"), @Tag("userTest")})
     void deleteExistedUser () {
-        String userName = TestData.userName;
-        String newUserData = TestData.newUserData;
+        User user = new User();
+             user.id= faker.number().numberBetween(1000,1200);
+             user.username = faker.name().firstName();
+             user.firstName = faker.name().firstName();
+             user.lastName = faker.name().lastName();
+             user.email = faker.internet().emailAddress();
+             user.password = faker.harryPotter().house();
+             user.phone = faker.phoneNumber().phoneNumber();
+             user.userStatus = faker.number().numberBetween(1,5);
         step("Добавляем нового пользователя", () -> {
         given().spec(request)
-               .body(newUserData)
+               .body(user)
                .when()
                .post("user/");
         });
@@ -38,12 +47,12 @@ public class DeleteUser extends TestBase {
         step("Удаляем пользователя", () -> {
         given().spec(request)
                .when()
-               .delete("user/"+userName)
+               .delete("user/"+user.username)
                .then()
                .spec(successfulResponse)
                .body("code", is(200))
                .body("type", is("unknown"))
-               .body("message", is(userName));
+               .body("message", is(user.username));
         });
     }
 

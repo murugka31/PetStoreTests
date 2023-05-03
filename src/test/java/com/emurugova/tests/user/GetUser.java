@@ -4,7 +4,6 @@ import com.emurugova.allure.Layer;
 import com.emurugova.allure.Microservice;
 import com.emurugova.models.User;
 import com.emurugova.tests.TestBase;
-import com.emurugova.tests.TestData;
 import io.qameta.allure.AllureId;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.*;
@@ -25,30 +24,38 @@ public class GetUser extends TestBase {
     @DisplayName("Найти пользователя по имени")
     @Tags({@Tag("api"), @Tag("critical"), @Tag("userTest")})
     void getUserByName() {
-        String newUserData = TestData.newUserData;
+        User user = new User();
+             user.id= faker.number().numberBetween(1000,1200);
+             user.username = faker.name().firstName();
+             user.firstName = faker.name().firstName();
+             user.lastName = faker.name().lastName();
+             user.email = faker.internet().emailAddress();
+             user.password = faker.harryPotter().house();
+             user.phone = faker.phoneNumber().phoneNumber();
+             user.userStatus = faker.number().numberBetween(1,5);
         step("Добавляем нового пользователя в БД", () -> {
             given().spec(request)
-                   .body(newUserData)
+                   .body(user)
                    .when()
                    .post("user/");
         });
 
         step("Находим пользователя в БД", () -> {
-            User user = given()
+            User foundUser = given()
                    .spec(request)
                    .when()
-                   .get("user/" + userName)
+                   .get("user/" + user.username)
                    .then()
                    .extract().as(User.class);
 
-            assertEquals(userId, user.getId());
-            assertEquals(userName, user.getUsername());
-            assertEquals(userFirstName, user.getFirstName());
-            assertEquals(userLastName, user.getLastName());
-            assertEquals(userEmail, user.getEmail());
-            assertEquals(userPassword, user.getPassword());
-            assertEquals(userPhone, user.getPhone());
-            assertEquals(userStatus, user.getUserStatus());
+            assertEquals(user.id, foundUser.getId());
+            assertEquals(user.username , foundUser.getUsername());
+            assertEquals(user.firstName, foundUser.getFirstName());
+            assertEquals(user.lastName, foundUser.getLastName());
+            assertEquals(user.email, foundUser.getEmail());
+            assertEquals(user.password, foundUser.getPassword());
+            assertEquals(user.phone, foundUser.getPhone());
+            assertEquals(user.userStatus, foundUser.getUserStatus());
         });
     }
 }

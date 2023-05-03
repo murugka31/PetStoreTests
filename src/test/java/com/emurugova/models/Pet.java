@@ -7,8 +7,10 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Pet {
 
-    private Integer id;
-    private String name;
-    private String status;
-    private Category category;
+    public Integer id;
+    public Category category;
+    public String name;
+    public String photoUrls;
+    public Tags tags;
+    public String status;
 }

@@ -2,6 +2,7 @@ package com.emurugova.tests.store;
 
 import com.emurugova.allure.Layer;
 import com.emurugova.allure.Microservice;
+import com.emurugova.models.Order;
 import com.emurugova.tests.TestBase;
 import com.emurugova.tests.TestData;
 import io.qameta.allure.AllureId;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 import static com.emurugova.specs.Specs.*;
+import static com.emurugova.tests.TestData.faker;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
@@ -26,11 +28,16 @@ public class DeletePurchaseOrder extends TestBase {
     @DisplayName("Удалить заказ на покупку")
     @Tags({@Tag("api"), @Tag("critical"), @Tag("storeTest")})
     void deleteExistedPurchaseOrder () {
-        int purchaseOrder = TestData.purchaseOrder;
-        String newPurchaseOrderData = TestData.newPurchaseOrderData;
+        Order order = new Order();
+              order.id = faker.number().numberBetween(100, 120);
+              order.petId = faker.number().numberBetween(1110, 1200);
+              order.quantity = faker.number().numberBetween(1, 3);
+              order.shipDate = faker.date().toString();
+              order.status = "placed";
+              order.complete = "true";
         step("Добавляем новый заказ на покупку животного", () -> {
         given().spec(request)
-               .body(newPurchaseOrderData)
+               .body(order)
                .when()
                .post("store/order/");
         });
@@ -38,7 +45,7 @@ public class DeletePurchaseOrder extends TestBase {
         step("Удаляем заказ на покупку животного", () -> {
         given().spec(request)
                .when()
-               .delete("store/order/"+purchaseOrder)
+               .delete("store/order/"+order.id)
                .then()
                .spec(successfulResponse)
                .body("code", is(200))

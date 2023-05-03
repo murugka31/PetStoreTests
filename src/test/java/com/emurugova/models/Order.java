@@ -7,6 +7,10 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Order {
 
-    private Integer id;
-    private Integer petId;
+    public Integer id;
+    public Integer petId;
+    public Integer quantity;
+    public String shipDate;
+    public String status;
+    public String complete;
 }
