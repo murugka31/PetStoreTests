@@ -4,6 +4,7 @@ import com.emurugova.allure.Layer;
 import com.emurugova.allure.Microservice;
 import com.emurugova.entity.request.PetDataRequest;
 import com.emurugova.tests.TestBase;
+import com.emurugova.tests.TestData;
 import io.qameta.allure.AllureId;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +13,6 @@ import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 import static com.emurugova.specs.Specs.*;
-import static com.emurugova.tests.TestData.*;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.*;
 import static io.restassured.http.ContentType.JSON;
@@ -22,6 +22,7 @@ import static io.restassured.http.ContentType.JSON;
 @Owner("Murugova Elena")
 public class DeletePetTest extends TestBase {
 
+    private TestData testData = new TestData();
     private PetDataRequest petDataRequest = new PetDataRequest();
 
     @Test
@@ -40,7 +41,7 @@ public class DeletePetTest extends TestBase {
         step("Удаляем животное из БД", () -> {
              given().spec(request)
                     .when()
-                    .delete("pet/" + petId)
+                    .delete("pet/" + petDataRequest.getTestData().petId)
                     .then()
                     .spec(successfulResponse());
         });
@@ -54,7 +55,7 @@ public class DeletePetTest extends TestBase {
         step("Удаляем несуществующее животное из БД", () -> {
              given().spec(request)
                     .when()
-                    .delete("pet/" + noPetId)
+                    .delete("pet/" + testData.noPetId)
                     .then()
                     .statusCode(404);
         });

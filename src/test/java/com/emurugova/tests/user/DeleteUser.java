@@ -4,6 +4,7 @@ import com.emurugova.allure.Layer;
 import com.emurugova.allure.Microservice;
 import com.emurugova.entity.request.UserDataRequest;
 import com.emurugova.tests.TestBase;
+import com.emurugova.tests.TestData;
 import io.qameta.allure.AllureId;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +13,6 @@ import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 import static com.emurugova.specs.Specs.*;
-import static com.emurugova.tests.TestData.*;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
@@ -22,6 +22,7 @@ import static org.hamcrest.Matchers.is;
 @Owner("Murugova Elena")
 public class DeleteUser extends TestBase {
 
+    private TestData testData = new TestData();
     private UserDataRequest userDataRequest = new UserDataRequest();
 
     @Test
@@ -39,12 +40,12 @@ public class DeleteUser extends TestBase {
         step("Удаляем пользователя", () -> {
         given().spec(request)
                .when()
-               .delete("user/"+userName)
+               .delete("user/"+userDataRequest.getTestData().userName)
                .then()
                .spec(successfulResponse())
                .body("code", is(200))
                .body("type", is("unknown"))
-               .body("message", is(userName));
+               .body("message", is(userDataRequest.getTestData().userName));
         });
     }
 
@@ -56,7 +57,7 @@ public class DeleteUser extends TestBase {
         step("Удаляем несуществующего пользователя", () -> {
         given().spec(request)
                .when()
-               .delete("user/"+noUserName)
+               .delete("user/"+ testData.noUserName)
                .then()
                .statusCode(404);
         });

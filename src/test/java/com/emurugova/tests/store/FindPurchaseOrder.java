@@ -4,6 +4,7 @@ import com.emurugova.allure.Layer;
 import com.emurugova.allure.Microservice;
 import com.emurugova.entity.request.OrderDataRequest;
 import com.emurugova.tests.TestBase;
+import com.emurugova.tests.TestData;
 import io.qameta.allure.AllureId;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +13,6 @@ import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 import static com.emurugova.specs.Specs.*;
-import static com.emurugova.tests.TestData.*;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
@@ -22,6 +22,7 @@ import static org.hamcrest.Matchers.is;
 @Owner("Murugova Elena")
 public class FindPurchaseOrder extends TestBase {
 
+    private TestData testData = new TestData();
     private OrderDataRequest storeDataRequest = new OrderDataRequest();
 
     @Test
@@ -39,12 +40,12 @@ public class FindPurchaseOrder extends TestBase {
         step("Находим заказ на покупку животного", () -> {
         given().spec(request)
                .when()
-               .get("store/order/"+orderId)
+               .get("store/order/"+storeDataRequest.getTestData().orderId)
                .then()
                .spec(successfulResponse())
                .body("status", is("placed"))
-               .body("petId", is(orderPetId ))
-               .body("id", is(orderId));
+               .body("petId", is(storeDataRequest.getTestData().orderPetId ))
+               .body("id", is(storeDataRequest.getTestData().orderId));
         });
     }
 
@@ -56,7 +57,7 @@ public class FindPurchaseOrder extends TestBase {
         step("Находим несуществующий заказ на покупку животного", () -> {
         given().spec(request)
                .when()
-               .get("store/order/"+noPurchaseOrder)
+               .get("store/order/"+testData.noPurchaseOrder)
                .then()
                .spec(response(404))
                .body("code", is(1))
