@@ -29,7 +29,7 @@ public class GetPetListTest extends TestBase {
     @DisplayName("Find pet by status")
     @Tags({@Tag("api"), @Tag("normal"), @Tag("petTest")})
     void getAvailablePetsListTest(String status) {
-        step("Находим всех животных по статусe", () -> {
+        step("Находим всех животных по статусу", () -> {
         given().spec(request)
                 .when()
                 .get("pet/findByStatus?status=" + status)
