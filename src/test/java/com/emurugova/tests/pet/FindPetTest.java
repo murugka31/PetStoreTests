@@ -61,7 +61,7 @@ public class FindPetTest extends TestBase {
                     .when()
                     .get("pet/" + noPetId)
                     .then()
-                    .spec(unsuccessfulResponse(404))
+                    .spec(response(404))
                     .body("code", is(1))
                     .body("type", is("error"))
                     .body("message", is("Pet not found"));

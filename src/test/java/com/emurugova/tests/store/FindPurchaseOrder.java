@@ -58,7 +58,7 @@ public class FindPurchaseOrder extends TestBase {
                .when()
                .get("store/order/"+noPurchaseOrder)
                .then()
-               .spec(unsuccessfulResponse(404))
+               .spec(response(404))
                .body("code", is(1))
                .body("type", is("error"))
                .body("message", is("Order not found"));

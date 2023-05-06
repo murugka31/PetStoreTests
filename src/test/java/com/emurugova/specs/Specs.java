@@ -24,7 +24,7 @@ public class Specs {
                 .build();
     }
 
-    public static ResponseSpecification unsuccessfulResponse(int statusCode) {
+    public static ResponseSpecification response(int statusCode) {
         return new ResponseSpecBuilder()
                 .log(LogDetail.ALL)
                 .expectStatusCode(statusCode)

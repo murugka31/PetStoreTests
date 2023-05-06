@@ -57,7 +57,7 @@ public class DeletePurchaseOrder extends TestBase {
                .when()
                .delete("store/order/"+noPurchaseOrder)
                .then()
-               .spec(unsuccessfulResponse(404) )
+               .spec(response(404) )
                .body("code", is(404))
                .body("type", is("unknown"))
                .body("message", is("Order Not Found"));
