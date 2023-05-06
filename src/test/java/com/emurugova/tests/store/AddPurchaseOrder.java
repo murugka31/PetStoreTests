@@ -2,7 +2,8 @@ package com.emurugova.tests.store;
 
 import com.emurugova.allure.Layer;
 import com.emurugova.allure.Microservice;
-import com.emurugova.models.Order;
+import com.emurugova.entity.request.OrderDataRequest;
+import com.emurugova.entity.response.OrderDataResponse;
 import com.emurugova.tests.TestBase;
 import io.qameta.allure.AllureId;
 import io.qameta.allure.Owner;
@@ -23,30 +24,28 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Owner("Murugova Elena")
 public class AddPurchaseOrder extends TestBase{
 
+    private OrderDataRequest storeDataRequest = new OrderDataRequest();
+
     @Test
     @AllureId("17558")
-    @DisplayName("Добавить заказ на покупку")
+    @DisplayName("Place an order for a pet")
     @Tags({@Tag("api"), @Tag("critical"), @Tag("storeTest")})
     void addOrderTest () {
-        Order order = new Order();
-              order.id = faker.number().numberBetween(100, 120);
-              order.petId = faker.number().numberBetween(1110, 1200);
-              order.quantity = faker.number().numberBetween(1, 3);
-              order.shipDate = "2023-04-16T07:42:39.059Z";
-              order.status = "placed";
-              order.complete = "true";
         step("Добавляем новый заказ на покупку животного", () -> {
-        Order addedOrder = given()
+        OrderDataResponse order = given()
                 .spec(request)
-                .body(order)
+                .body(storeDataRequest.orderRequest().toString())
                 .when()
                 .post("store/order/")
                 .then()
-                .spec(successfulResponse)
-                .extract().as(Order.class);
+                .spec(successfulResponse())
+                .extract().as(OrderDataResponse.class);
 
-        assertEquals(order.id, addedOrder.getId());
-        assertEquals(order.petId, addedOrder.getPetId());
+            assertEquals(orderId, order.getId());
+            assertEquals(orderPetId, order.getPetId());
+            assertEquals(orderQuantity, order.getQuantity());
+            assertEquals(orderStatus, order.getStatus());
+            assertEquals(orderComplete, order.getComplete());
         });
     }
 }

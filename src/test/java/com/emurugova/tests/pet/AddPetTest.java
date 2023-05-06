@@ -2,9 +2,9 @@ package com.emurugova.tests.pet;
 
 import com.emurugova.allure.Layer;
 import com.emurugova.allure.Microservice;
-import com.emurugova.models.Pet;
+import com.emurugova.entity.request.PetDataRequest;
+import com.emurugova.entity.response.PetDataResponse;
 import com.emurugova.tests.TestBase;
-import com.emurugova.tests.TestData;
 import io.qameta.allure.AllureId;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
@@ -23,26 +23,30 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Owner("Murugova Elena")
 public class AddPetTest extends TestBase {
 
+    private PetDataRequest petDataRequest = new PetDataRequest();
+
     @Test
     @AllureId("17565")
-    @DisplayName("Добавить животное в базу данных")
+    @DisplayName("Add a new pet to the store")
     @Tags({@Tag("api"), @Tag("critical"), @Tag("petTest")})
     void addPetToTheListTest() {
-        String newPetData = TestData.newPetData;
         step("Добавляем животное в БД", () -> {
-            Pet pet = given()
+            PetDataResponse pet = given()
                     .spec(request)
-                    .body(newPetData)
+                    .body(petDataRequest.petRequest().toString())
                     .when()
                     .post("pet/")
                     .then()
-                    .spec(successfulResponse)
-                    .extract().as(Pet.class);
+                    .spec(successfulResponse())
+                    .extract().as(PetDataResponse.class);
 
             assertEquals(petId, pet.getId());
-            assertEquals(petName, pet.getName());
-            assertEquals(petStatus, pet.getStatus());
+            assertEquals(categoryId, pet.getCategory().getId());
             assertEquals(categoryName, pet.getCategory().getName());
+            assertEquals(petName, pet.getName());
+            assertEquals(petTagsId, pet.getTags().get(0).getId());
+            assertEquals(petTagsName, pet.getTags().get(0).getName());
+            assertEquals(petStatus, pet.getStatus());
         });
     }
 }

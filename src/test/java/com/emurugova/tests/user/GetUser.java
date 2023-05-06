@@ -2,7 +2,8 @@ package com.emurugova.tests.user;
 
 import com.emurugova.allure.Layer;
 import com.emurugova.allure.Microservice;
-import com.emurugova.models.User;
+import com.emurugova.entity.request.UserDataRequest;
+import com.emurugova.entity.response.UserDataResponse;
 import com.emurugova.tests.TestBase;
 import io.qameta.allure.AllureId;
 import io.qameta.allure.Owner;
@@ -19,43 +20,37 @@ import static org.junit.jupiter.api.Assertions.*;
 @Owner("Murugova Elena")
 public class GetUser extends TestBase {
 
+    private UserDataRequest userDataRequest = new UserDataRequest();
+
     @Test
     @AllureId("17551")
-    @DisplayName("Найти пользователя по имени")
+    @DisplayName("Get user by user name")
     @Tags({@Tag("api"), @Tag("critical"), @Tag("userTest")})
     void getUserByName() {
-        User user = new User();
-             user.id= faker.number().numberBetween(1000,1200);
-             user.username = faker.name().firstName();
-             user.firstName = faker.name().firstName();
-             user.lastName = faker.name().lastName();
-             user.email = faker.internet().emailAddress();
-             user.password = faker.harryPotter().house();
-             user.phone = faker.phoneNumber().phoneNumber();
-             user.userStatus = faker.number().numberBetween(1,5);
         step("Добавляем нового пользователя в БД", () -> {
             given().spec(request)
-                   .body(user)
+                   .body(userDataRequest.userRequest().toString())
                    .when()
                    .post("user/");
         });
 
         step("Находим пользователя в БД", () -> {
-            User foundUser = given()
+            UserDataResponse user =
+             given()
                    .spec(request)
                    .when()
-                   .get("user/" + user.username)
+                   .get("user/" + userName)
                    .then()
-                   .extract().as(User.class);
+                   .extract().as(UserDataResponse.class);
 
-            assertEquals(user.id, foundUser.getId());
-            assertEquals(user.username , foundUser.getUsername());
-            assertEquals(user.firstName, foundUser.getFirstName());
-            assertEquals(user.lastName, foundUser.getLastName());
-            assertEquals(user.email, foundUser.getEmail());
-            assertEquals(user.password, foundUser.getPassword());
-            assertEquals(user.phone, foundUser.getPhone());
-            assertEquals(user.userStatus, foundUser.getUserStatus());
+            assertEquals(userId, user.getId());
+            assertEquals(userName, user.getUsername());
+            assertEquals(userFirstName, user.getFirstName());
+            assertEquals(userLastName, user.getLastName());
+            assertEquals(userEmail, user.getEmail());
+            assertEquals(userPassword, user.getPassword());
+            assertEquals(userPhone, user.getPhone());
+            assertEquals(userStatus, user.getUserStatus());
         });
     }
 }

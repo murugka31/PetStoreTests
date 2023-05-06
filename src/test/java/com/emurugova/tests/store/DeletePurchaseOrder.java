@@ -2,9 +2,8 @@ package com.emurugova.tests.store;
 
 import com.emurugova.allure.Layer;
 import com.emurugova.allure.Microservice;
-import com.emurugova.models.Order;
+import com.emurugova.entity.request.OrderDataRequest;
 import com.emurugova.tests.TestBase;
-import com.emurugova.tests.TestData;
 import io.qameta.allure.AllureId;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
@@ -13,7 +12,7 @@ import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 import static com.emurugova.specs.Specs.*;
-import static com.emurugova.tests.TestData.faker;
+import static com.emurugova.tests.TestData.*;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
@@ -23,21 +22,16 @@ import static org.hamcrest.Matchers.is;
 @Owner("Murugova Elena")
 public class DeletePurchaseOrder extends TestBase {
 
+    private OrderDataRequest storeDataRequest = new OrderDataRequest();
+
     @Test
     @AllureId("17559")
-    @DisplayName("Удалить заказ на покупку")
+    @DisplayName("Delete purchase order by ID")
     @Tags({@Tag("api"), @Tag("critical"), @Tag("storeTest")})
     void deleteExistedPurchaseOrder () {
-        Order order = new Order();
-              order.id = faker.number().numberBetween(100, 120);
-              order.petId = faker.number().numberBetween(1110, 1200);
-              order.quantity = faker.number().numberBetween(1, 3);
-              order.shipDate = faker.date().toString();
-              order.status = "placed";
-              order.complete = "true";
         step("Добавляем новый заказ на покупку животного", () -> {
         given().spec(request)
-               .body(order)
+               .body(storeDataRequest.orderRequest().toString())
                .when()
                .post("store/order/");
         });
@@ -45,9 +39,9 @@ public class DeletePurchaseOrder extends TestBase {
         step("Удаляем заказ на покупку животного", () -> {
         given().spec(request)
                .when()
-               .delete("store/order/"+order.id)
+               .delete("store/order/"+orderId)
                .then()
-               .spec(successfulResponse)
+               .spec(successfulResponse())
                .body("code", is(200))
                .body("type", is("unknown"));
         });
@@ -55,16 +49,15 @@ public class DeletePurchaseOrder extends TestBase {
 
     @Test
     @AllureId("17557")
-    @DisplayName("Удалить несуществующий заказ на покупку")
+    @DisplayName("Delete non-existent purchase order by ID")
     @Tags({@Tag("api"), @Tag("normal"), @Tag("storeTest")})
     void deleteNoExistedPurchaseOrder () {
-        int noPurchaseOrder = TestData.noPurchaseOrder;
         step("Удаляем несуществующий заказ на покупку животного", () -> {
         given().spec(request)
                .when()
                .delete("store/order/"+noPurchaseOrder)
                .then()
-               .spec(unsuccessfulResponse )
+               .spec(unsuccessfulResponse(404) )
                .body("code", is(404))
                .body("type", is("unknown"))
                .body("message", is("Order Not Found"));

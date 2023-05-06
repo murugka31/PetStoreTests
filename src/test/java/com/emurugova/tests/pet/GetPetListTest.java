@@ -8,62 +8,33 @@ import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static com.emurugova.specs.Specs.*;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
 
 @Microservice("Swagger Petstore")
 @Layer("API")
 @Owner("Murugova Elena")
 public class GetPetListTest extends TestBase {
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "available",
+            "pending",
+            "sold"})
     @AllureId("17561")
-    @DisplayName("Вывести список доступных животных")
+    @DisplayName("Find pet by status")
     @Tags({@Tag("api"), @Tag("normal"), @Tag("petTest")})
-    void getAvailablePetsListTest() {
-        String status = "available";
-        step("Находим всех животных со статусом Доступны", () -> {
+    void getAvailablePetsListTest(String status) {
+        step("Находим всех животных по статусe", () -> {
         given().spec(request)
                 .when()
                 .get("pet/findByStatus?status=" + status)
                 .then()
-                .spec(successfulResponse);
-        });
-    }
-
-    @Test
-    @AllureId("17562")
-    @DisplayName("Вывести список ожидающих животных")
-    @Tags({@Tag("api"), @Tag("normal"), @Tag("petTest")})
-    void getPendingPetsListTest() {
-        String status = "pending";
-        step("Находим всех животных со статусом Ожидают", () -> {
-        given().spec(request)
-               .contentType(JSON)
-               .when()
-               .get("pet/findByStatus?status=" + status)
-               .then()
-               .spec(successfulResponse);
-        });
-    }
-
-    @Test
-    @AllureId("17560")
-    @DisplayName("Вывести список проданных животных")
-    @Tags({@Tag("api"), @Tag("normal"), @Tag("petTest")})
-    void getSoldPetsListTest() {
-        String status = "sold";
-        step("Находим всех животных со статусом Проданы", () -> {
-        given().spec(request)
-               .contentType(JSON)
-               .when()
-               .get("pet/findByStatus?status=" + status)
-               .then()
-               .spec(successfulResponse);
+                .spec(successfulResponse());
         });
     }
 }
